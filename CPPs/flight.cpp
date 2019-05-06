@@ -1,10 +1,5 @@
 #include "flight.h"
 
-using std::cout;
-
-
-//flight::flight(string "", string "", int 0, int 0, int 0, int 0, int 0);
-
  bool flight::operator == (const flight &f1) const{
    
      return((f1.departure_city == departure_city) && 

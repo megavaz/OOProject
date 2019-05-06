@@ -2,26 +2,28 @@
 #define FLIGHT_H
 #include <iostream>
 #include <string>
+#include <flight_base.h>
 using std::string;
 //using std::vector;
 using std::cout;
 
 
-class flight
+class flight: public flight_base
 {
-    public:
-
-    enum Week_day{Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
+    public:   
+   
+    string departure_city, arrival_city; 
+    enum week_day{Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
+    week_day departure_day, arrival_day;
+       
+    int departure_time, arrival_time; //time in minutes
     
-    string departure_city, arrival_city;
-    Week_day departure_day, arrival_day;
-    int departure_time, arrival_time, identifier; //time in minutes
 
     flight(const string &departure_city,const string &arrival_city, 
-     Week_day departure_day , Week_day arrival_day, int departure_time, 
-        int arrival_time, int identifier):
+     week_day departure_day, week_day arrival_day, int departure_time = 0, 
+        int arrival_time = 0, int identifier = 0):
         departure_city(departure_city), arrival_city(arrival_city), departure_day(departure_day),
-         arrival_day(arrival_day), departure_time(departure_time), arrival_time(arrival_time), identifier(identifier) {}
+         arrival_day(arrival_day), departure_time(departure_time), arrival_time(arrival_time), flight_base(identifier) {}
 
     
      flight reverse () const;
@@ -52,9 +54,9 @@ class flight
         return(arrival_time);
     };
 
-    int get_identidier() const{
+    /*int get_identidier() const{
         return(identifier);
-    };
+    };*/
 
 
 };
