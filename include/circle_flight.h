@@ -10,7 +10,6 @@ using std::cout;
 class circle_flight: public flight_base
 {
     public:
-    enum week_day{Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday};
     struct city
     {
         string city_name;
@@ -26,12 +25,12 @@ class circle_flight: public flight_base
     circle_flight(const int identifier):flight_base(identifier){}
 
 
-    int get_arrival_day(int n) const{
-        return int(cities[n].arrival_day);
+    week_day get_arrival_day(int n) const{
+        return (cities[n].arrival_day);
     };
 
-    int get_departure_day(int n) const{
-        return int(cities[n].departure_day);
+    week_day get_departure_day(int n) const{
+        return (cities[n].departure_day);
     };
 
     int get_departure_time(int n) const{
@@ -50,8 +49,8 @@ class circle_flight: public flight_base
         return(identifier);
     };*/
 
-    int add_city(const string c, const week_day a_d, const int a_t,
-     const week_day d_d, const int d_t); //adds city into the "cities" vector
+    void add_city(const string &c, week_day a_d, int a_t,
+     week_day d_d, int d_t); //adds city into the "cities" vector
 };
 
 #endif

@@ -1,7 +1,7 @@
 #include "circle_flight.h"
 using std::cout;
 
-int circle_flight::add_city(const string c, const week_day a_d, const int a_t, const week_day d_d, const int d_t)
+void circle_flight::add_city(const string &c, week_day a_d, int a_t, week_day d_d, int d_t)
 {
     city temp;
     temp.city_name = c;
@@ -10,5 +10,5 @@ int circle_flight::add_city(const string c, const week_day a_d, const int a_t, c
     temp.departure_day = d_d;
     temp.departure_time = d_t;
     cities.push_back(temp);
-    return 0;
+    //return 0;
 };
