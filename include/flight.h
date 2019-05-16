@@ -30,7 +30,7 @@ class flight: public flight_base{
             departure_time = departure_time_arg;
             arrival_time = arrival_time_arg;
         }
-    flight();
+    flight(int identifier = -1):flight_base(identifier){}
 
     
     flight reverse () const;
@@ -60,10 +60,6 @@ class flight: public flight_base{
     int get_arrival_time() const{
         return(arrival_time);
     };
-
-    /*int get_identidier() const{
-        return(identifier);
-    };*/
 
 
 };

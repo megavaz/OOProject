@@ -2,17 +2,17 @@
 
 
 
-void schedule::equaliser (schedule *current,const flight &a){  // this function is used just to reduce code length
-    current->departure_city = a.get_departure_city();
-    current->arrival_city = a.get_arrival_city();
-    current->departure_day = a.get_departure_day();
-    current->arrival_day = a.get_arrival_day();
-    current->departure_time = a.get_departure_time();
-    current->arrival_time = a.get_arrival_time();
-    current->identifier = a.get_identifier();
+void schedule::equaliser (flight &current,const flight &a){  // this function is used just to reduce code length
+    current.departure_city = a.get_departure_city();
+    current.arrival_city = a.get_arrival_city();
+    current.departure_day = a.get_departure_day();
+    current.arrival_day = a.get_arrival_day();
+    current.departure_time = a.get_departure_time();
+    current.arrival_time = a.get_arrival_time();
+    current.identifier = a.get_identifier();
 }
 
-int schedule::add(const flight &a){                            // adds flight into schedule
+/*int schedule::add(const flight &a){                            // adds flight into schedule
     schedule *current=this, *prev, *temp;    
     if (current->identifier == -1){     // checks if there are no flights in the schedule and if so adds first one
         equaliser(current, a);
@@ -44,8 +44,41 @@ int schedule::add(const flight &a){                            // adds flight in
         }
     }
     return 0;
-};
+};*/
 
+int schedule::add(const flight &a){                            // adds flight into schedule
+    schedule *current=this, *prev, *temp;    
+    if (current->voyage.get_identifier() == -1){     // checks if there are no flights in the schedule and if so adds first one
+        equaliser(current->voyage, a);
+    }
+    else{
+        while(current != nullptr){
+            if(current->voyage.departure_time+current->voyage.departure_day*1440>(a.get_departure_time()+a.get_departure_day()*1440)){ 
+                temp = new schedule;              
+                temp->voyage.departure_city = current->voyage.get_departure_city();  // this while goes through list and adds flight with respect to its departure
+                temp->voyage.arrival_city = current->voyage.get_arrival_city();
+                temp->voyage.departure_day = current->voyage.get_departure_day();
+                temp->voyage.arrival_day = current->voyage.get_arrival_day();
+                temp->voyage.departure_time = current->voyage.get_departure_time();
+                temp->voyage.arrival_time = current->voyage.get_arrival_time();
+                temp->voyage.identifier = current->voyage.get_identifier();
+                temp->next = current->next;
+                equaliser(current->voyage, a);
+                current->next = temp;
+                break;
+            }
+            prev = current;
+            current = current->next;
+        }
+        if (current == nullptr){             // if current flight is the latest of all it's added in the end of the list
+            current = new schedule;
+            equaliser(current->voyage, a);
+            current->next = nullptr;
+            prev->next = current;
+        }
+    }
+    return 0;
+};
 std::vector<flight> schedule::convert(const circle_flight &a){  // this method converts circle flight into regular flight
     std::vector<flight> flights;
     int number_of_cities = a.cities.size(); //number of members in the vector with cities
@@ -74,16 +107,16 @@ int schedule::add(const circle_flight &a){                 // uses vector of cla
 };
 
 int schedule::flight_time(){
-    return (this->get_arrival_day()*1440+this->get_arrival_time()-this->get_departure_day()*1440-this->get_departure_time());
+    return (this->voyage.get_arrival_day()*1440+this->voyage.get_arrival_time()-this->voyage.get_departure_day()*1440-this->voyage.get_departure_time());
 };
 
 int schedule::get_schedule(){
     schedule *a = this;
     printf("| ID| Departure time| Departure day| Departure city| Arrival time| Arrival Day| Arrival city|    Flight time|\n");
     while (a != nullptr){
-        printf("|%03i|          %02i:%02i|     %9s|%15s|        %02i:%02i|   %9s|%13s| %02i hrs %02i mins|\n", a->get_identifier(), a->get_departure_time()/60,
-     a->get_departure_time()%60, a->Weekday(a->get_departure_day()).c_str(), a->get_departure_city().c_str(), a->get_arrival_time()/60,
-     a->get_arrival_time()%60, a->Weekday(a->get_arrival_day()).c_str(), a->get_arrival_city().c_str(), a->flight_time()/60, a->flight_time()%60);
+        printf("|%03i|          %02i:%02i|     %9s|%15s|        %02i:%02i|   %9s|%13s| %02i hrs %02i mins|\n", a->voyage.get_identifier(), a->voyage.get_departure_time()/60,
+     a->voyage.get_departure_time()%60, a->voyage.Weekday(a->voyage.get_departure_day()).c_str(), a->voyage.get_departure_city().c_str(), a->voyage.get_arrival_time()/60,
+     a->voyage.get_arrival_time()%60, a->voyage.Weekday(a->voyage.get_arrival_day()).c_str(), a->voyage.get_arrival_city().c_str(), a->flight_time()/60, a->flight_time()%60);
      a = a->next;     
     }    
     return 0;

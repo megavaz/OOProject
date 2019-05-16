@@ -1,18 +1,17 @@
-#ifndef ZHOPA_H
-#define ZHOPA_H
+#ifndef SCHEDUL_H
+#define SCHEDUL_H
 #include <iostream>
 #include <string>
 #include <vector>
 #include "flight.h"
 #include "circle_flight.h"
 
-class schedule: public flight{   
+class schedule{   
     
     public:
     schedule *next;
-    schedule(int departure_time = 0, int identifier = -1):
-        flight(departure_city, arrival_city, departure_day, arrival_day, departure_time, arrival_time, identifier),
-        next(nullptr){}
+    flight voyage;
+    schedule(): next(nullptr){}
 
     int add(const flight &a);
 
@@ -20,7 +19,7 @@ class schedule: public flight{
 
     std::vector<flight> convert(const circle_flight &a);
 
-    void equaliser(schedule *current,const flight &a);
+    void equaliser(flight &current,const flight &a);
 
     int flight_time();
 

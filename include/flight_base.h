@@ -15,5 +15,6 @@ class flight_base{
 
     string Weekday(week_day day);
 
+
 };
 #endif
