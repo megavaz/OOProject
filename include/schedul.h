@@ -9,9 +9,8 @@
 class schedule{   
     
     public:
-    schedule *next;
-    flight voyage;
-    schedule(): next(nullptr){}
+    std::vector<flight> flights;
+    schedule(){}
 
     int add(const flight &a);
 
@@ -19,9 +18,7 @@ class schedule{
 
     std::vector<flight> convert(const circle_flight &a);
 
-    void equaliser(flight &current,const flight &a);
-
-    int flight_time();
+    int flight_time(const int i);
 
     int get_schedule();
 

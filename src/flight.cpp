@@ -14,14 +14,13 @@ bool flight::operator == (const flight &f1) const{
 flight flight::reverse() const{
     return flight(arrival_city, departure_city,
      departure_day , arrival_day, departure_time, 
-        arrival_time, identifier);
-    //return this;
+        arrival_time, identifier);    
 };
 
 
 bool  flight::operator < (const flight &f1) const{
-  return (arrival_time+(arrival_day-departure_day)*1440-departure_time)<
-  ((f1.arrival_time+(f1.arrival_day-f1.departure_day)*1440-f1.departure_time));  
+  return (departure_time+departure_day*1440)<
+  ((f1.departure_time+f1.departure_day*1440));  
 };
 
 

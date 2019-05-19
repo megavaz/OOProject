@@ -16,11 +16,8 @@ class circle_flight: public flight_base
         week_day departure_day, arrival_day;
         int departure_time, arrival_time;
     };
-    //int identifier;
-    std::vector<city> cities;
-    //string *city;
-   //week_day *departure_day, *arrival_day;
-    //int *departure_time, *arrival_time, identifier;
+    
+    std::vector<city> cities;  
 
     circle_flight(const int identifier):flight_base(identifier){}
     circle_flight();
